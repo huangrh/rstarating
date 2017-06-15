@@ -32,8 +32,10 @@ The purpose of this package is to use R to replicate and improve the methodlogy 
 
 \# The parameters  
 > write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))  
+
 \# The group scores   
 > write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))   
+
 \# The summary scores & stars       
 > write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))  
 
