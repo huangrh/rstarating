@@ -1,0 +1,16 @@
+Package: rstarating
+Type: Package
+Title: CMS Hospital Compare Star Rating Replicate
+Version: 0.1.0
+Author: Ren-Huai Huang, Ascension Health Care Excellence Analytics & ACRI
+Maintainer: Ren-Huai Huang <ascensionsci@gmail.com>
+Description: Overall hospital quality star rating on hospital compare (v2.0)
+            2016 SAS pack software replication (maybe more than one line)
+License: GPL3
+LazyData: TRUE
+Imports: data.table(>= 1.9.6)
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr

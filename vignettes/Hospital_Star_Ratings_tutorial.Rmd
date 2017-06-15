@@ -1,0 +1,56 @@
+---
+title: "Hospital Star Rating Tutotial Using True LVM Model"
+author: "Ren-Huai Huang, Ascension Health Care Excellence Analytics & ACRI"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# Install the packages before loading if you didn't do so. 
+# require(devtools); 
+# devtools::install_github("huangrh/rstarating");
+# devtools::install_github("huangrh/relvm");
+# devtools::install_github("huangrh/rclus");
+require(rstarating); require(relvm); require(rclus)
+```
+
+```{r oct2016_set}
+set.seed(100)
+
+# Load the input dataset from October 2016. 
+x       <- cms2016oct_input
+
+# Data preparation. 
+object  <-  x <- mstbl(x) 
+
+# LVM model fitting. 
+fit2       <-   relvm(x)  #fit2_quad       <-   relvm_quad(x)
+
+# K-means clustering.
+sr <- rating(fit2$groups$summary_score, iter.max = 110)
+
+# Save your data. 
+op <- out_dir("C:/rhuang/github/rstarating/inst")
+write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))
+write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))
+write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))
+```
+
+
+```{r dec2016}
+# Load the input data
+x3    <- read.csv(system.file("/cms/dec2016/sas_input_2016dec.csv",package="cmsdata"))
+x3    <- mstbl(x3)
+fit3 <- relvm(x3)
+sr3   <- rating(fit3$groups$summary_score,iter.max = 110) 
+
+# Save your data. Change the output directory accordingly. 
+op <- out_dir("C:/rhuang/github/rstarating/inst")
+write.csv(sr3$summary_score, file=file.path(op,"Dec2016_sum_score_truelvm_fit3.csv"))
+write.csv(fit3$groups$pars, file=file.path(op,"Dec2016_par_truelvm_fit3.csv"))
+write.csv(fit3$groups$preds, file=file.path(op,"Dec2016_preds_truelvm_fit3.csv"))
+```
