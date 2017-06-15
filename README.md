@@ -27,9 +27,13 @@ fit2       <-   relvm(x)  #fit2_quad       <-   relvm_quad(x)
 \# K-means clustering.   
 sr <- rating(fit2$groups$summary_score, iter.max = 110)
 
-\# Save your data.    
-op <- out_dir("C:/rhuang/github/rstarating/inst")   
-write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))   
+\# Save output. Setup the local directory accordingly.      
+op <- out_dir("C:/rhuang/github/rstarating/inst")  
+
+\# The parameters  
 write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))  
+\# The group scores   
 write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))   
+\# The summary scores & stars       
+write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))  
 
