@@ -22,10 +22,10 @@ The purpose of this package is to use R to replicate and improve the methodlogy 
 > x <- mstbl(x)   
 
 \# LVM model fitting.    
-> fit2       <-   relvm(x)  #fit2_quad       <-   relvm_quad(x)
+> fit2_quad       <-   relvm_quad(x) # fit2       <-   relvm(x)  
 
 \# K-means clustering.   
-> sr <- rating(fit2$groups$summary_score, iter.max = 110)
+> sr <- rating(fit2$groups$summary_score, iter.max = 1)
 
 \# Save output. Setup the local directory accordingly.      
 > op <- out_dir("C:/rhuang/github/rstarating/inst")  
