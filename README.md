@@ -2,7 +2,7 @@
 
 -----
 ### Introduction  
-The purpose of this package is to use R to replicate and improve the methodlogy of CMS Hospital Compare Star Rating as posted on https://www.qualitynet.org.
+The purpose of this package is to use R to replicate the methodlogy of CMS Hospital Compare Star Rating as posted on https://www.qualitynet.org and to improve it thereafter. R is widely used open source software in statistic analysis.  
 
 -----
 ### Installation   
