@@ -2,9 +2,9 @@
 
 -----
 ### Introduction  
-The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). During the reimplementation, two major issues have been discovered: 
+The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). During the reimplementation, two major issues have been found: 
 
-- CMS's SAS Pack run the k-means clustering with ONE iteratrion. 
+- CMS's SAS Pack implements the k-means clustering with ONE iteratrion. 
 
 - CMS's Latent Variable Model (LVM) uses the Gaussian quadrature approximation with 30 qpoints, which failed to approach the integral of the objective function. This leads to hundreds of hospitals receiving an incorrect star rating. 
 
@@ -47,5 +47,8 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 \# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, method="kmeans", iter.max = 100)
 
-### For Python user:
+### License
+GPL(3)
+
+### If you are a Python user:
 [hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel. It runs in less than a minute. 
