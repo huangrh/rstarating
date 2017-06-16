@@ -32,11 +32,10 @@ The initial goal of the package is to reimplement the [SAS-Pack](http://www.qual
 > sr <- rating(fit2$groups$summary_score, iter.max = 1)
 
 \# Save the output.       
-\# Save the parameters, group scores and the summary scores & stars   
 > op <- out_dir("C:/rhuang/github/rstarating/inst")  # Setup the output directory accordingly.
-> write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))   
-> write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))         
-> write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))  
+> write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))   #the parameters
+> write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv")) #group scores        
+> write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv")) #the summary scores & stars 
 
 ### Tutorial to run true latent variable model and corrested kmeans clustering. 
 \# Step 1: Prepare and clean up the dataset.   
