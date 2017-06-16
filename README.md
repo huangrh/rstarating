@@ -52,5 +52,7 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 ### License
 GPL(3)
 
-### If you are a Python user:
+### For a Python user:
 [hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel. It runs in less than a minute. 
+
+### [To report an issue](https://github.com/huangrh/rstarating/issues/new)
