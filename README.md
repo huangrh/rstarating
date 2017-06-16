@@ -11,14 +11,14 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 -----
 ### Installation   
  
-> require(devtools);  # Install the package devtools if you didn't do so.  
+> require(devtools);  # Install the package devtools if you didn't do so 
 > devtools::install_github("huangrh/rstarating");  
 > devtools::install_github("huangrh/relvm");  
 > devtools::install_github("huangrh/rclus");  
 > require(rstarating); require(relvm); require(rclus)  
 
 -----
-### To replicate the original sas pack (use the data from october 2016). 
+### To replicate the original sas pack (use the data from october 2016) 
 \# Load the input dataset from October 2016.   
 > x <- cms2016oct_input
 
@@ -37,7 +37,7 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 > write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv")) #group scores        
 > write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv")) #the summary scores & stars 
 
-### Tutorial to run true latent variable model and corrected kmeans clustering. 
+### Tutorial to run true latent variable model and corrected kmeans clustering 
 \# Step 1: Prepare and clean up the dataset.   
 > x <- mstbl(x)   
 
