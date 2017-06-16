@@ -48,7 +48,6 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 \# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, method="kmeans", iter.max = 100)
 
-### [To report an issues]
 
 ### License
 GPL(3)
