@@ -2,7 +2,7 @@
 
 -----
 ### Introduction  
-The purpose of this package is to use R to replicate the methodlogy of CMS Hospital Compare Star Rating as posted on https://www.qualitynet.org and to improve it thereafter. R is widely used open source software in statistic analysis.  
+The package is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) script for the CMS Hospital Compare Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). R is widely used open source software in statistic analysis. This process has been speed up tremendous and it 
 
 -----
 ### Installation   
