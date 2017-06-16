@@ -18,16 +18,16 @@ The purpose of this package is to use R to replicate the methodlogy of CMS Hospi
 \# Load the input dataset from October 2016.   
 > x <- cms2016oct_input
 
-\# Data preparation.   
+\# Step 1: Prepare and clean up the dataset.   
 > x <- mstbl(x)   
 
-\# LVM model fitting.    
+\# Step 2: Fit the LVM model.    
 > fit2 <-  relvm_quad(x) # fit2 <-   relvm(x)  
 
-\# K-means clustering.   
+\# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, iter.max = 1)
 
-\# Save output. Setup the local directory accordingly.      
+\# Save the output. Setup the local directory accordingly.      
 > op <- out_dir("C:/rhuang/github/rstarating/inst")  
 
 \# Save the parameters  
