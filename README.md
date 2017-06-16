@@ -6,7 +6,7 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 
 - CMS's SAS Pack run the k-means clustering with ONE iteratrion. 
 
-- CMS's Latent Variable Model (LVM) uses the Gaussian quadrature approximation with 30 qpoints, which failed to approach the integral of the objective function. This leads to a . 
+- CMS's Latent Variable Model (LVM) uses the Gaussian quadrature approximation with 30 qpoints, which failed to approach the integral of the objective function. This leads to hundreds of hospitals receiving an incorrect star rating. 
 
 -----
 ### Installation   
