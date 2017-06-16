@@ -4,9 +4,9 @@
 ### Introduction  
 The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). During the reimplementation, two major issues have been found: 
 
-- CMS's SAS Pack implements the k-means clustering with ONE iteratrion. 
+- CMS's SAS Pack, which implements the k-means clustering with ONE iteratrion, failed to converge.  This leads to ~ 1/4 hospitals receiving an incorrect star rating.
 
-- CMS's Latent Variable Model (LVM) uses the Gaussian quadrature approximation with 30 qpoints, which failed to approach the integral of the objective function. This leads to hundreds of hospitals receiving an incorrect star rating. 
+- CMS's Latent Variable Model (LVM), which uses a Gaussian quadrature approximation with 30 qpoints, failed to approach the integral of the objective function. This also leads to hundreds of hospitals receiving an incorrect star rating. 
 
 -----
 ### Installation   
