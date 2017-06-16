@@ -16,13 +16,13 @@ The purpose of this package is to use R to replicate and improve the methodlogy 
 -----
 ### Tutorial  (use the data from october 2016.)
 \# Load the input dataset from October 2016.   
-> x       <- cms2016oct_input
+> x <- cms2016oct_input
 
 \# Data preparation.   
 > x <- mstbl(x)   
 
 \# LVM model fitting.    
-> fit2_quad       <-   relvm_quad(x) # fit2       <-   relvm(x)  
+> fit2 <-  relvm_quad(x) # fit2 <-   relvm(x)  
 
 \# K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, iter.max = 1)
