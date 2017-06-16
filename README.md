@@ -31,10 +31,9 @@ The initial goal of the package is to reimplement the [SAS-Pack](http://www.qual
 \# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, iter.max = 1)
 
-\# Save the output. Setup the local directory accordingly.      
-> op <- out_dir("C:/rhuang/github/rstarating/inst")  
-
-\# Save the parameters, group scores and the summary scores & stars  
+\# Save the output.       
+\# Save the parameters, group scores and the summary scores & stars   
+> op <- out_dir("C:/rhuang/github/rstarating/inst")  # Setup the output directory accordingly.
 > write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))   
 > write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))         
 > write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))  
