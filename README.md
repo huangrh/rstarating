@@ -32,10 +32,10 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 > sr <- rating(fit2$groups$summary_score, iter.max = 1)
 
 \# Save the output.       
-> op <- out_dir("C:/rhuang/github/rstarating/inst")  # Setup the output directory accordingly.
-> write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))   #the parameters
-> write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv")) #group scores        
-> write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv")) #the summary scores & stars 
+> op <- out_dir("C:/rhuang/github/rstarating/inst")  # Setup the output directory accordingly.   
+> write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))   #the parameters   
+> write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv")) #group scores           
+> write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv")) #the summary scores & stars    
 
 ### Tutorial to run the true latent variable model and the corrected kmeans clustering 
 
