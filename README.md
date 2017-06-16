@@ -2,7 +2,11 @@
 
 -----
 ### Introduction  
-The package is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) script for the CMS Hospital Compare Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). R is widely used open source software in statistic analysis. This process has been speed up tremendous and it 
+The initial goal of the package is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434). During the reimplementation, several major issues have been discovered: 
+
+- CMS's SAS Pack run the k-means clustering with ONE iteratrion. 
+
+- CMS's Latent Variable Model (LVM) uses Gaussian quadrature to approximate the integral, which lead to a incorrect estimates of the model parameters. 
 
 -----
 ### Installation   
@@ -14,7 +18,7 @@ The package is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/Conte
 > require(rstarating); require(relvm); require(rclus)  
 
 -----
-### Tutorial  (use the data from october 2016.)
+### To replicate the original sas pack (use the data from october 2016). 
 \# Load the input dataset from October 2016.   
 > x <- cms2016oct_input
 
@@ -39,3 +43,12 @@ The package is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/Conte
 \# Save the summary scores & stars       
 > write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv"))  
 
+### Tutorial to run true latent variable model and corrested kmeans clustering. 
+\# Step 1: Prepare and clean up the dataset.   
+> x <- mstbl(x)   
+
+\# Step 2: Fit the LVM model.    
+> fit2 <-   relvm(x)  
+
+\# Step 3: K-means clustering.   
+> sr <- rating(fit2$groups$summary_score, method="kmeans", iter.max = 100)
