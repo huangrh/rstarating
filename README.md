@@ -46,3 +46,6 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 
 \# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, method="kmeans", iter.max = 100)
+
+### For Python user:
+[hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel. It runs in less than a minute. 
