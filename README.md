@@ -38,6 +38,7 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 > write.csv(sr$summary_score,  file=file.path(op,"Oct2016_sum_score_truelvm_fit2.csv")) #the summary scores & stars 
 
 ### Tutorial to run the true latent variable model and corrected kmeans clustering 
+
 \# Step 1: Prepare and clean up the dataset.   
 > x <- mstbl(x)   
 
@@ -46,6 +47,8 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 
 \# Step 3: K-means clustering.   
 > sr <- rating(fit2$groups$summary_score, method="kmeans", iter.max = 100)
+
+### [To report an issues]
 
 ### License
 GPL(3)
