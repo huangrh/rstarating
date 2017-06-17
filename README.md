@@ -1,8 +1,8 @@
-# CMS Hospital Compare Star Rating SAS Pack Replica  
+# CMS Hospital Compare Star Rating SAS Pack Replica   
 
 -----
 ### Introduction  
-The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434) through . During the reimplementation, two major issues have been found: 
+The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier3&cid=1228775958130) for the CMS Hospital Compare Overall Star Rating as posted on [https://www.qualitynet.org](http://www.qualitynet.org/dcs/ContentServer?c=Page&pagename=QnetPublic%2FPage%2FQnetTier2&cid=1228775183434) in [R](https://cran.r-project.org/). During the reimplementation, two major issues have been found: 
 
 - CMS's K-means clustering, which runs for ONE iteratrion, failed to converge.  This leads to ~ 1/4 hospitals receiving an incorrect star rating.
 
