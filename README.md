@@ -8,7 +8,7 @@ The initial goal is to reimplement the [SAS-Pack](http://www.qualitynet.org/dcs/
 
 - CMS's Latent Variable Model (LVM), which uses a Gaussian quadrature approximation with 30 qpoints, failed to approach the integral of the objective function. This also leads to hundreds of hospitals receiving an incorrect star rating. 
 
-The package provide a friendly access to the CMS's original SAS-Pack of the overall Star Rating through Rand fixed . Click the link at the end of this page if you have questions or any other issues. 
+The issues are fixed in the R package. See the tutorial to replicate the original SAS-Pack and to run the the corrected LVM model and K-means clustering. Click the link at the end of this page to report if you have questions or any other issues. 
 
 -----
 ### Installation   
