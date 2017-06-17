@@ -13,11 +13,11 @@ The package replicates the CMS's original SAS-Pack of the overall Star Rating an
 -----
 ### Installation   
  
-> require(devtools);  # Install the package devtools if you didn't do so 
-> devtools::install_github("huangrh/rstarating");  
-> devtools::install_github("huangrh/relvm");  
-> devtools::install_github("huangrh/rclus");  
-> require(rstarating); require(relvm); require(rclus)  
+> require(devtools);  # Install the package devtools if you didn't do so.     
+> devtools::install_github("huangrh/rstarating");     
+> devtools::install_github("huangrh/relvm");    
+> devtools::install_github("huangrh/rclus");    
+> require(rstarating); require(relvm); require(rclus)    
 
 -----
 ### To replicate the original sas pack (use the data from october 2016) 
