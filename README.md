@@ -57,4 +57,4 @@ GPL(3)
 ### For a Python user:
 [hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel. It runs in less than a minute. 
 
-### [To report an issue(click the link)](https://github.com/huangrh/rstarating/issues/new)
+### [To report an issue (click the link)](https://github.com/huangrh/rstarating/issues/new)
