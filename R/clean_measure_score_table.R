@@ -39,7 +39,7 @@ mstbl <- function (x,cutoff = 100) {
   if (is.null(x$provider_id)) {
     stop("provider_id is missing")
   } else {
-    x$provider_id <- gsub("^b'|'$", "", x$provider_id)
+    x$provider_id <- as.integer(gsub("^b'|'$", "", x$provider_id))
     }
 
   # ---------------------------------------------------------------------------
@@ -96,29 +96,11 @@ mstbl <- function (x,cutoff = 100) {
   # so all measures are in the same direction and a higher score means better
   # Ref SAS Pack #0 Lines 360-405
   #
-  flip_measures <- c(
-    # outcome_safty
-    "hai_1","hai_2","hai_3", "hai_4","hai_5","hai_6","psi_90_safety","comp_hip_knee",
-
-    # outcome_readm
-    "readm_30_ami" , "readm_30_cabg", "readm_30_copd", "readm_30_hf", "readm_30_hip_knee",
-    "readm_30_hosp_wide", "readm_30_pn", "readm_30_stk",
-
-    # outcome_mort
-    "mort_30_ami", "mort_30_cabg", "mort_30_copd","mort_30_hf", "mort_30_pn",
-    "mort_30_stk","psi_4_surg_comp",
-
-    # process_time
-    "ed_1b", "ed_2b","op_3b", "op_5","op_18b", "op_20","op_21",
-
-    # effi_image
-    "op_8",   "op_10", "op_11", "op_13", "op_14",
-
-    # care_effe
-    "pc_01", "vte_6","op_22")
-
+  mtbl2 <- create_measure_tbl(std_x)
+  flip_measures <- mtbl2[mtbl2$direction == -1, "name"]
   flip_measures <- flip_measures[flip_measures %in% measure(std_x)]
-  std_x[flip_measures] <- - std_x[flip_measures]
+
+  std_x[flip_measures] <- -1 * std_x[flip_measures]
 
   # ------------------------------------------------------------------
   # Winsorization standardized measure scores at Z= -3 & Z=3

@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_measure_tbl.R
 \name{assign_group}
 \alias{assign_group}
-\title{Measure Assignment Into Measure Group}
+\title{Measure Group Assignment}
 \usage{
 assign_group(measure_tbl = measure_tbl)
 }

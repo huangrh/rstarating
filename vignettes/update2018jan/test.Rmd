@@ -1,0 +1,58 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r,include=FALSE}
+require(rstarating);require(relvm);require(rclus)
+```
+
+```{r}
+x = cms2016oct_input
+x <- mstbl(cms2016oct_input)
+# Step 2: Fit the LVM model.
+fit2 <- relvm(x)
+
+#
+file <- file.path("C:/rhuang/workspace/R/rstarating/vignettes/update2018Jan/output",
+                  paste0("fit_github_truelvm_oct2016_",Sys.Date(),".rds"))
+if (!file.exists(file)) saveRDS(fit2,file)
+```
+
+```{r}
+
+pars <- fit2$groups$pars
+mtbl <- create_measure_tbl(x$mstbl_std)
+pars <- merge(x=mtbl, y=pars, by="name",all=TRUE)
+pars[c('fl','mu','err')] <- round(pars[c('fl','mu','err')],4)
+pars <- pars[order(pars$type,pars$group,pars$name),]
+
+```  
+
+
+```{r}
+pars2 <- fit2$groups$pars
+mtbl2 <- create_measure_tbl(x$mstbl_std)
+pars2 <- merge(x=mtbl, y=pars2, by="name",all=TRUE)
+pars2[c('fl','mu','err')] <- round(pars2[c('fl','mu','err')],4)
+pars2 <- pars2[order(pars2$type,pars2$group,pars2$name),]
+
+# 
+pars_ <- merge(x=pars,y=pars2,by=c("name","group"),all=TRUE,suffixes = c("_github","_update"))
+
+pars_$diff <- pars_$fl_update - pars_$fl_github
+
+pars_[c("name","group","direction","diff","fl_github","fl_update")]
+
+```
+
+```{r}
+
+```
+
