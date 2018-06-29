@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2017 Ren-Huai Huang <huangrenhuai@gmail.com>
+# Copyright (C) 2016-2018 Ren-Huai Huang <huangrenhuai@gmail.com>
 #
 # This file is part of rstarating.
 #
@@ -34,12 +34,14 @@
 mstbl <- function (x,cutoff = 100) {
 
   # Clean up column names and the provide ID column
-  if (length(x$X)) x$X=NULL
   names(x) <- tolower(names(x))
-  if (is.null(x$provider_id)) {
-    stop("provider_id is missing")
+  if (!is.null(x$x)) x$x=NULL
+
+  colnames(x) <- gsub("provider_id","ccnid",colnames(x))
+  if (is.null(x$ccnid)) {
+    stop("provider_id or ccnid is missing")
   } else {
-    x$provider_id <- as.integer(gsub("^b'|'$", "", x$provider_id))
+    x$ccnid <- as.integer(gsub("^b'|'$", "", x$ccnid))
     }
 
   # ---------------------------------------------------------------------------
@@ -105,7 +107,7 @@ mstbl <- function (x,cutoff = 100) {
   # ------------------------------------------------------------------
   # Winsorization standardized measure scores at Z= -3 & Z=3
   std_x[] <- lapply(std_x, winsorize, min=-3, max =3)
-  std_x   <- cbind.data.frame(x["provider_id"],std_x)
+  std_x   <- cbind.data.frame(x["ccnid"],std_x)
 
   # -----------------------------------------------------------------
   wts_x  <- create_weight(x)
@@ -119,7 +121,7 @@ mstbl <- function (x,cutoff = 100) {
   #    (that is, Mortality, Safty of Care, Readmission).
   # indicator 1 means the hospital passed the report criteria
   report_indicator <- valid_report(x)
-  report_indicator <- cbind.data.frame(x["provider_id"],report_indicator)
+  report_indicator <- cbind.data.frame(x["ccnid"],report_indicator)
 
   # ------------------------------------------------------------------
   # output
@@ -201,5 +203,5 @@ create_weight <- function(x = r_x) {
   den_tbl <- den_tbl[grepl("_wt$",names(den_tbl))]
 
   # add the provider id back
-  (den_tbl <- cbind(x["provider_id"],den_tbl))
+  (den_tbl <- cbind(x["ccnid"],den_tbl))
 }

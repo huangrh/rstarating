@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2017 Ren-Huai Huang <huangrenhuai@gmail.com>
+# Copyright (C) 2016-2018 Ren-Huai Huang <huangrenhuai@gmail.com>
 #
 # This file is part of rstarating.
 #
@@ -57,12 +57,12 @@ grouping <- function(group,df=alldf) {
 
   # data table
   measure_name<- mtbl[(mtbl$group %in% group) & (mtbl$type %in% "score"),"name"]
-  dat_tbl     <- df[, names(df) %in% c("provider_id",measure_name)]
+  dat_tbl     <- df[, names(df) %in% c("ccnid",measure_name)]
 
 
   # weight table
   wt_name <- sapply(measure_name, function(x) paste0(x,"_wt"))
-  wt_tbl  <- df[, names(df) %in% c("provider_id",wt_name)]
+  wt_tbl  <- df[, names(df) %in% c("ccnid",wt_name)]
 
   # remove the na rows
   na_row_idx<- apply(is.na(dat_tbl[-1]),1,all)

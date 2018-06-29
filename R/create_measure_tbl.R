@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2017 Ren-Huai Huang <huangrenhuai@gmail.com>
+# Copyright (C) 2016-2018 Ren-Huai Huang <huangrenhuai@gmail.com>
 #
 # This file is part of rstarating.
 #
@@ -52,6 +52,13 @@ cols <- measure <- function(x=sasdata, type=c("score","denominator","wt","id"),g
 #'
 create_measure_tbl <- function(data_tbl = sas_data) {
 
+  # remove the following columns from the input table
+  columns <- c('x','ccnid',"provider_id")
+  columns <- columns[columns %in% tolower(names(data_tbl))]
+  for (column in columns) {
+    data_tbl[grep(column, names(data_tbl), value=TRUE,ignore.case = T)] <- NULL
+  }
+
   # hospital counts for each measure in the data_tbl
   hsp_counts <- sapply(data_tbl, function(col){
     len <- length(na.omit(col))
@@ -91,7 +98,12 @@ create_measure_tbl <- function(data_tbl = sas_data) {
     direction = -1,
     measures = c(
       # 1----- outcome_safty (all)---------------
-      "hai_1","hai_2","hai_3", "hai_4","hai_5","hai_6","psi_90_safety","comp_hip_knee",
+      "hai_1","hai_2","hai_3", "hai_4","hai_5","hai_6","psi_90_safety","psi_90","comp_hip_knee",
+      # 1-a -- outcome
+      "psi_03","psi_06","psi_08", "psi_09", "psi_10","psi_11","psi_12","psi_13","psi_14","psi_15",
+      'psi_10_post_kidney','psi_11_post_resp', 'psi_12_postop_pulmemb_dvt','psi_13_post_sepsis',
+      'psi_14_postop_dehis','psi_15_acc_lac', 'psi_3_ulcer','psi_6_iat_ptx',
+      'psi_8_post_hip', 'psi_9_post_hem', 'psi_90_safety',
       # 2----- outcome_readm (all)---------------
       "readm_30_ami" , "readm_30_cabg", "readm_30_copd", "readm_30_hf", "readm_30_hip_knee",
       "readm_30_hosp_wide", "readm_30_pn", "readm_30_stk","edac_30_ami", "edac_30_hf",  "op_32",
@@ -118,7 +130,9 @@ create_measure_tbl <- function(data_tbl = sas_data) {
 
   # Assign each measure into a group.
   measure_tbl  <- rstarating:::assign_group(measure_tbl)
-  measure_tbl  <- measure_tbl[!is.na(measure_tbl$group),]
+  measure_tbl[is.na(measure_tbl$group),"group"] <- "unknow"
+  # measure_tbl  <- measure_tbl[!is.na(measure_tbl$group),]
+  # measure_tbl <- measure_tbl[order(measure_tbl$type,measure_tbl$group,measure_tbl$name),]
   rownames(measure_tbl) <- NULL
   #
   measure_tbl
@@ -171,7 +185,26 @@ assign_group <- function(measure_tbl = measure_tbl){
                                                     'HAI_4',
                                                     'HAI_5',
                                                     'HAI_6',
-                                                    'PSI_90_SAFETY'))
+                                                    'PSI_90_SAFETY','psi_90',
+                                                    "psi_03","psi_06","psi_08",
+                                                    "psi_09",
+                                                    "psi_10",
+                                                    "psi_11",
+                                                    "psi_12",
+                                                    "psi_13",
+                                                    "psi_14",
+                                                    "psi_15",
+                                                    'psi_3_ulcer',
+                                                    # 'psi_4_surg_comp',
+                                                    'psi_6_iat_ptx',
+                                                    'psi_8_post_hip',
+                                                    'psi_9_post_hem',
+                                                    'psi_10_post_kidney',
+                                                    'psi_11_post_resp',
+                                                    'psi_12_postop_pulmemb_dvt',
+                                                    'psi_13_post_sepsis',
+                                                    'psi_14_postop_dehis',
+                                                    'psi_15_acc_lac'))
 
   #########################################################
   # 3 outcome-readmission measure group     (outcome_readm)

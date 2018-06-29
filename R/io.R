@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2017 Ren-Huai Huang <huangrenhuai@gmail.com>
+# Copyright (C) 2016-2018 Ren-Huai Huang <huangrenhuai@gmail.com>
 #
 # This file is part of rstarating.
 #
@@ -41,7 +41,6 @@ out_dir <- function(x) {
 #'
 #' Pipe function from magrittr package.
 #'
-#' @export
 `%>%` <- magrittr:::pipe()
 
 

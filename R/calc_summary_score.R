@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2017 Ren-Huai Huang <huangrenhuai@gmail.com>
+# Copyright (C) 2016-2018 Ren-Huai Huang <huangrenhuai@gmail.com>
 #
 # This file is part of rstarating.
 #
@@ -37,30 +37,33 @@ sum_score <- function(x,wts=NULL) {
                                care_effe     = 0.04,
                                process_time  = 0.04,
                                effi_image    = 0.04)}
-  provider_id <- x[,1]
+  ccnid <- x[,1]
   x <- as.data.frame(x)
 
   # Test if the name of wts matches the column name.
-  if (!all(names(wts) %in% colnames(x))) return(NULL)
+  if (all(names(wts) %in% colnames(x))) {
+    # Subset the group score only.
+    x <- x[names(wts)]
 
-  # Subset the group score only.
-  x <- x[names(wts)]
+    # calculate summary score for each row.
+    sum_score <- apply(x,1,function(row) {
+      # redistribute the weight
+      wt_row <- wts * as.numeric(!is.na(row))
+      wt_row <- wt_row/sum(wt_row)
+      ifelse(all(is.na(row)),NA,sum(row * wt_row,na.rm=TRUE))
+    })
 
-  # calculate summary score for each row.
-  sum_score <- apply(x,1,function(row) {
-    # redistribute the weight
-    wt_row <- wts * as.numeric(!is.na(row))
-    wt_row <- wt_row/sum(wt_row)
-    ifelse(all(is.na(row)),NA,sum(row * wt_row,na.rm=TRUE))
-  })
-
-  # Winsorize the summary score.
-  sum_score_win <- winsorize(sum_score,
-                             min=max(sum_score[sum_score<quantile(sum_score,0.005)]),
-                             max=min(sum_score[sum_score>quantile(sum_score,0.995)]))
+    # Winsorize the summary score.
+    sum_score_win <- winsorize(sum_score,
+                               min=max(sum_score[sum_score<quantile(sum_score,0.005)]),
+                               max=min(sum_score[sum_score>quantile(sum_score,0.995)]))
+  } else {
+    sum_score     <- NA
+    sum_score_win <- NA
+  }
 
   # out
-  cbind.data.frame(provider_id,sum_score,sum_score_win)
+  cbind.data.frame(ccnid,sum_score,sum_score_win)
 }
 
 

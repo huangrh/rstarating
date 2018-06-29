@@ -10,49 +10,126 @@ vignette: >
 ---
 
 ```{r,include=FALSE}
-require(rstarating);require(relvm);require(rclus)
+require(rstarating);require(relvm);require(rclus);require(cmsdata);require(reshape2)
 ```
 
 ```{r}
-x = cms2016oct_input
-x <- mstbl(cms2016oct_input)
-# Step 2: Fit the LVM model.
-fit2 <- relvm(x)
-
-#
-file <- file.path("C:/rhuang/workspace/R/rstarating/vignettes/update2018Jan/output",
-                  paste0("fit_github_truelvm_oct2016_",Sys.Date(),".rds"))
-if (!file.exists(file)) saveRDS(fit2,file)
-```
-
-```{r}
-
-pars <- fit2$groups$pars
-mtbl <- create_measure_tbl(x$mstbl_std)
-pars <- merge(x=mtbl, y=pars, by="name",all=TRUE)
-pars[c('fl','mu','err')] <- round(pars[c('fl','mu','err')],4)
-pars <- pars[order(pars$type,pars$group,pars$name),]
-
-```  
-
-
-```{r}
-pars2 <- fit2$groups$pars
-mtbl2 <- create_measure_tbl(x$mstbl_std)
-pars2 <- merge(x=mtbl, y=pars2, by="name",all=TRUE)
-pars2[c('fl','mu','err')] <- round(pars2[c('fl','mu','err')],4)
-pars2 <- pars2[order(pars2$type,pars2$group,pars2$name),]
+# "C:/rhuang/cmsdata/2018/20180126/Hospital_Revised_Flatfiles",
+# "Complications and Deaths - Hospital.csv"  
+# "HOSPITAL_QUARTERLY_AHRQ_PSI_90_6decimals.csv"
+file <- file.path("T:/Clinical Excellence/Analytics/Data Sources/cmsData/2017/20171221/Hospital_Revised_Flatfiles20171221", 
+          "Complications and Deaths - Hospital.csv")
 
 # 
-pars_ <- merge(x=pars,y=pars2,by=c("name","group"),all=TRUE,suffixes = c("_github","_update"))
+psi_ <- read_csv(file) %>%
+  subset(select=c("ccnid","measure_id","score","denominator")) %>%
+  subset(.$measure_id %in% grep("psi",.$measure_id,value=T)) %>%
+  subset(!(.$measure_id %in% c("psi_4_surg_comp","psi_90_safety")))
 
-pars_$diff <- pars_$fl_update - pars_$fl_github
+psi_score=  psi_%>% 
+      dcast(ccnid~measure_id,value.var="score") 
+psi_den = psi_ %>% 
+      dcast(ccnid~measure_id,value.var="denominator") 
 
-pars_[c("name","group","direction","diff","fl_github","fl_update")]
+psi <- merge(x=psi_score,y=psi_den,by="ccnid",all=T,suffixes = c("","_den"))
+
+# 
+input <- cms_star_rating_input_2017dec %>%
+  colnames_wiper("provider_id","ccnid") %>%
+  cols_str_wiper(index="ccnid",pattern="^b'0|^b'|'$",with="") %>% 
+  subset(select=!(grepl("psi_90_safety",names(.)))) %>%
+  merge(y= psi, by="ccnid",all=T)
+
+  
+mtbl <- create_measure_tbl(input) 
+mtbl[mtbl$group=="outcome_safty",]
+```
+
+```{r}
+sort_by_group <- function(y) {
+  merge(x=create_measure_tbl(mstbl(input)$mstbl_std)[c("name","group")],
+        y=y,by="name",all.y=T) %>%
+    cols_sort(by=c("group","name"))  %>%
+    subset(group == "outcome_safty") %>% 
+    rownames_wiper()
+}
+```
+
+
+```{r}
+# Test 1: replace psi90 with 10 of psi 90 componet measures. 
+fit1 <- relvm(mstbl(input))
+
+par1 <- sort_by_group(fit1$groups$pars)
+
+# Test 2 : put all the den to 100. 
+input2 <- input
+
+for (idx in grep("_den",colnames(input2),value=T)) {
+  input2[,idx] <- ifelse(is.na(input2[,idx]),NA, 100)
+}
+fit2 <- relvm(mstbl(input2))
+
+par2 <- sort_by_group(fit2$groups$pars)
+
 
 ```
 
 ```{r}
+# TEst 3 remove hai_ and comp_hip_knee measure. psi_components only 
+input3 <- input2
+for (idx in c(grep("comp_hip_knee|hai_",names(input2),value=T))) {
+  input3[idx] <- NULL
+  
+}
+
+fit3 <- relvm(mstbl(input3))
+par3 <- sort_by_group(fit3$groups$pars)
+
+# TEst 4 remove psi_components and comp_hip_knee.  
+input4 <- input2
+for (idx in c(grep("comp_hip_knee|psi_",names(input4),value=T))) {
+  input4[idx] <- NULL
+  
+}
+
+fit4 <- relvm(mstbl(input4))
+par4 <- sort_by_group(fit4$groups$pars)
+```
+
+```{r}
+# test 5 original denominator, but remove comp_hip_knee and hai_ measures. So 
+input5 <- input
+for (idx in c(grep("comp_hip_knee|hai_",names(input5),value=T))) {
+  input5[idx] <- NULL
+}
+
+fit5 <- relvm(mstbl(input5))
+par5 <- sort_by_group(fit5$groups$pars)
 
 ```
+
+
+```{r}
+require(rio)
+file <- file.path("T:/Clinical Excellence/Analytics/Personal Development Folders/RenHuai/star/TEP",
+                  'cms_star_dec2017_den_100_v3.xlsx')
+export(par1,file,which="repalce psi 90",overwrite=T)
+export(par2,file,which="then replace den 100",overwrite=T)
+export(par3,file,which="psi component only",overwrite=T)
+export(par4,file,which="hai only",overwrite=T)
+export(par5,file,which="psi_components_den_original",overwrite=T)
+
+```
+
+
+
+
+
+
+# Test
+```{r}
+
+```
+
 
