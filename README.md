@@ -52,12 +52,12 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 ### Updates on July 2018 
 
-#### CMS has improved the LVM and the k-means clustering in December 2017:   
+#### CMS has improved the LVM and the k-Means clustering in December 2017:   
 
 1. The k-means clustering is converged.   
 2. The non-adaptive LVM is replaced with adaptive LVM model, which generates a similar results to those from our true/analytical LVM.   
 
-#### To replicate the above updates in R: 
+#### To replicate the CMS updates released in Dec 2017: 
 
 \# Install and load the packages according to the installation instruction above.     
 > input <- rstarating::cms_star_rating_input_2017dec # The input dataset from Dec. 2017 is attached.
@@ -70,6 +70,17 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 \# Step 3: K-means clustering. 
 > sr3  <- rating(x=fit3$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)
+
+#### In this release (Dec. 2017), one issue CMS still need solve is the measure factor loading is dominated by one measure in the safety of care group. This can be test with measure randomization before 3-step precedures.   
+\# For example, randimize the hai_1 measure will not change the star rating.   
+> input <- measure_manipulate(dat=cms_star_rating_input_2017dec,method="randomize",measures="hai_1")  
+> x     <- mstbl(input)  
+> fit4  <- relvm(x)  
+> sr4   <- rating(x=fit4$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)  
+
+#### To test the effect of the measure denominator weigting, one can prepare the input data by setting the measure denominator to one as below.   
+> input <- measure_manipulate(dat=cms_star_rating_input_2017dec,method="den_one",measures="hai_1")  
+
 
 ### License
 GPL(3)
