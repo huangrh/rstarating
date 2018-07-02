@@ -52,7 +52,7 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 ### Updates on July 2018 
 
-#### CMS has improved the LVM and the k-means clustering as below:   
+#### CMS has improved the LVM and the k-means clustering in December 2017:   
 
 1. The k-means clustering is converged.   
 2. The non-adaptive LVM is replaced with adaptive LVM model, which generates a similar results to those from our true/analytical LVM.   
