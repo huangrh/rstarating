@@ -71,14 +71,14 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 \# Step 3: K-means clustering. 
 > sr3  <- rating(x=fit3$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)
 
-#### In this release (Dec. 2017), one issue we found is that the measure factor loading is dominated by one measure in the safety of care group, which causes all other measures very little contribution to the group score. This can be tested with a measure randomization before the 3-step precedure.   
+#### In this release (Dec. 2017), one issue we found is that the measure factor loading is dominated by one measure in the safety of care group, and all other measures have a very little contribution to the group score. This can be tested with a measure randomization during the data praparation.   
 \# For example, randimizing the hai_1 measure will not change the star rating.   
 > input <- measure_manipulate(dat=cms_star_rating_input_2017dec,method="randomize",measures="hai_1")  
 > x     <- mstbl(input)  
 > fit4  <- relvm(x)  
 > sr4   <- rating(x=fit4$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)  
 
-#### One way to solve the issue is to remove the measure weigting in the LVM model. The measure weights can be removed by setting them to one or by setting the measure denominator in the input data frame to one as below.   
+#### Removing the measure weigts in the LVM model is one way to balance the measure loading. Currently this can be achieved by setting them to one or by setting the measure denominator in the input data frame to one as below.   
 > input <- measure_manipulate(dat=cms_star_rating_input_2017dec, method="den_one", measures="hai_1")  
 
 
@@ -88,4 +88,4 @@ GPL(3)
 ### For a Python user:
 [hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel as of July 2017. It runs in less than a minute. 
 
-### [To report an issue (click the link)](https://github.com/huangrh/rstarating/issues/new)
+### [To report an issue or if you have any questions(click the link)](https://github.com/huangrh/rstarating/issues/new)
