@@ -45,7 +45,7 @@ write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv")
 # Load the input data
 x3    <- read.csv(system.file("/cms/dec2016/sas_input_2016dec.csv",package="cmsdata"))
 x3    <- mstbl(x3)
-fit3 <- relvm(x3)
+fit3  <- relvm(x3)
 sr3   <- rating(fit3$groups$summary_score,iter.max = 110) 
 
 # Save your data. Change the output directory accordingly. 
