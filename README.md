@@ -76,6 +76,6 @@ Install and load the packages according to the installation instruction as above
 GPL(3)
 
 ### For a Python user:
-[hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel. It runs in less than a minute. 
+[hydrus](https://github.com/mark-r-g/hydrus) is developed in parallel as of July 2017. It runs in less than a minute. 
 
 ### [To report an issue (click the link)](https://github.com/huangrh/rstarating/issues/new)
