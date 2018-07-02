@@ -124,12 +124,3 @@ export(par5,file,which="psi_components_den_original",overwrite=T)
 
 
 
-
-
-
-# Test
-```{r}
-
-```
-
-
