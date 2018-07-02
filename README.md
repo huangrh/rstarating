@@ -59,11 +59,10 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 #### To replicate the above updates in R: 
 
-Install and load the packages according to the installation instruction above.    
+\# Install and load the packages according to the installation instruction above.     
+> input <- rstarating::cms_star_rating_input_2017dec # The input dataset from Dec. 2017 is attached.
 
 \# Step 1: Prepare and clean up the dataset.     
-
-> input <- rstarating::cms_star_rating_input_2017dec # The input dataset from Dec. 2017 is attached. 
 > x     <- mstbl(input)
 
 \# Step 2: Fit the LVM model.
