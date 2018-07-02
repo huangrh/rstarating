@@ -53,21 +53,24 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 ### Updates on July 2018 
 
 #### CMS has improved the LVM and the k-means clustering as below:   
+
 1. The k-means clustering is converged.   
 2. The non-adaptive LVM is replaced with adaptive LVM model, which generates a similar results to those from our true/analytical LVM.   
 
 #### To replicate the above updates in R: 
 
-Install and load the packages according to the installation instruction as above. 
-\# Step 1: Prepare and clean up the dataset.
-input <- rstarating::cms_star_rating_input_2017dec # The input dataset from Dec. 2017 is attached. 
-x <- mstbl(input)
+Install and load the packages according to the installation instruction as above.    
+
+\# Step 1: Prepare and clean up the dataset.     
+
+> input <- rstarating::cms_star_rating_input_2017dec # The input dataset from Dec. 2017 is attached. 
+> x     <- mstbl(input)
 
 \# Step 2: Fit the LVM model.
-fit3 <- relvm(x)
+> fit3 <- relvm(x)
 
 \# Step 3: K-means clustering. 
-sr3  <- rating(x=fit3$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)
+> sr3  <- rating(x=fit3$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)
 
 ### License
 GPL(3)
