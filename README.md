@@ -59,7 +59,7 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 #### To replicate the above updates in R: 
 
-Install and load the packages according to the installation instruction as above.    
+Install and load the packages according to the installation instruction above.    
 
 \# Step 1: Prepare and clean up the dataset.     
 
