@@ -71,15 +71,15 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 \# Step 3: K-means clustering. 
 > sr3  <- rating(x=fit3$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)
 
-#### In this release (Dec. 2017), one issue CMS still need solve is the measure factor loading is dominated by one measure in the safety of care group. This can be test with measure randomization before 3-step precedures.   
-\# For example, randimize the hai_1 measure will not change the star rating.   
+#### In this release (Dec. 2017), one issue we found is that the measure factor loading is dominated by one measure in the safety of care group, which causes all other measures very little contribution to the group score. This can be tested with a measure randomization before the 3-step precedure.   
+\# For example, randimizing the hai_1 measure will not change the star rating.   
 > input <- measure_manipulate(dat=cms_star_rating_input_2017dec,method="randomize",measures="hai_1")  
 > x     <- mstbl(input)  
 > fit4  <- relvm(x)  
 > sr4   <- rating(x=fit4$groups$summary_score,method="rclus2",score_col="sum_score",iter.max=5000)  
 
-#### To test the effect of the measure denominator weigting, one can prepare the input data by setting the measure denominator to one as below.   
-> input <- measure_manipulate(dat=cms_star_rating_input_2017dec,method="den_one",measures="hai_1")  
+#### One way to solve the issue is to remove the measure weigting in the LVM model. The measure weights can be removed by setting them to one or by setting the measure denominator in the input data frame to one as below.   
+> input <- measure_manipulate(dat=cms_star_rating_input_2017dec, method="den_one", measures="hai_1")  
 
 
 ### License
