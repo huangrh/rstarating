@@ -27,13 +27,16 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 \# Step 1: Prepare and clean up the dataset.   
 > x <- mstbl(x)   
 
-\# Step 2: Fit the LVM model.    
-> fit2 <-  relvm_quad(x) # fit2 <-   relvm(x)  
+\# Step 2: Fit the LVM model (non-adaptive).    
+> fit_noad <-  relvm_noad(x) # fit2 <-   relvm(x)  
 
 \# Step 3: K-means clustering.   
-> sr <- rating(fit2$groups$summary_score, iter.max = 1)
+> sr <- rating(fit_noad$groups$summary_score, method="rclus",score_col="sum_score_win",iter.max = 1)
 
-\# Save the output.       
+\# Comparison with cms hospital overall rating published in Oct. 2016.   
+> merge(x = sr_noad$star, y = cms_star_hospital_overall_rating2016oct, by = "ccnid",all.x=T) %>%
+> with(table(star,hospital_overall_rating))
+\# Save the output
 > op <- out_dir("C:/rhuang/github/rstarating/inst")           # Setup the output directory accordingly.   
 > write.csv(fit2$groups$pars,  file=file.path(op,"Oct2016_par_truelvm_fit2.csv"))       #the parameters   
 > write.csv(fit2$groups$preds, file=file.path(op,"Oct2016_preds_truelvm_fit2.csv"))     #group scores           
