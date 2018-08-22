@@ -31,7 +31,7 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 > fit_noad <-  relvm_noad(x) # fit2 <-   relvm(x)  
 
 \# Step 3: K-means clustering.   
-> sr <- rating(fit_noad$groups$summary_score, method="rclus",score_col="sum_score_win",iter.max = 1)
+> sr_noad <- rating(fit_noad$groups$summary_score, method="rclus",score_col="sum_score_win",iter.max = 1)
 
 \# Comparison with cms hospital overall rating published in Oct. 2016.   
 > merge(x = sr_noad$star, y = cms_star_hospital_overall_rating2016oct, by = "ccnid",all.x=T) %>%
