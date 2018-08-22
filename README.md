@@ -58,7 +58,7 @@ The issues are fixed in the R package. See the tutorial to replicate the origina
 
 #### 5.1. CMS has improved the LVM and the k-Means clustering in December 2017:   
 
-1. The k-means clustering is converged.   
+1. The k-means clustering is converged with multipe iterations using fastclus. But this procedure does not guarantee a global minima as seen in the current star rating.   
 2. The non-adaptive LVM is replaced with adaptive LVM model, which generates a similar results to those from our true/analytical LVM.   
 
 #### 5.2. To replicate the CMS updates released in Dec 2017: 
