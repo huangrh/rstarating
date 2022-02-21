@@ -1,0 +1,273 @@
+---
+title: "The Formula of Random-Effect Latent Variable Model"
+author: "Ren-Huai Huang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+<style type="text/css"> h1 {font-size: 18px;} </style>
+## 1. Latent Variable Model
+
+${X_m =  \mu_m + \ell_m u + \epsilon_m}$   
+
+$\epsilon_m \sim \mathcal{N}(0,\sigma^2)$   
+
+$u \sim \mathcal{N}(0,1)  \hspace{71pt}$    
+
+
+- $X_m$ :  The standardized measure vriable
+- $\mu_m$ : The offset to the mean
+- $\ell_m$ : The loading of the latent variable ${u}$
+- $\mathcal{u}$: The latent variable
+- $\epsilon_m$: Normal distributed error 
+- Example: suppose we have a set of M measure variables ($m = 1,2,...,m,...,M$)  
+${X_1 =  \mu_1 + \ell_1 u + \epsilon_1}$  
+${X_2 =  \mu_2 + \ell_2 u + \epsilon_2}$  
+$...$   
+${X_m =  \mu_m + \ell_m u + \epsilon_m}$  
+$...$   
+${X_M =  \mu_M + \ell_M u + \epsilon_M}$  
+
+## 2. Weighted likelihood ($\mathcal{L}$) & log likelihood($\mathcal{LL}$) 
+
+**For each hospital $h$:**  
+$\mathcal{L}^{(h)} = \prod_{m=1}^M \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m})^{w_m^{(h)}} \hspace{35pt}$  
+
+or
+
+$\mathcal{LL}^{(h)} = \sum_{m=1}^M (w_m^{(h)} * \log( \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m}))) \hspace{35pt}$  
+
+
+<br />
+**For all hospitals $(h= 1,2,3,...,H)$:** 
+
+$\mathcal{L}^{(total)} = \prod_{h=1}^H \prod_{m=1}^M \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m})^{w_m^{(h)}} \hspace{35pt}$  
+
+or
+
+$\mathcal{LL}^{(total)} = \sum_{h=1}^H \sum_{m=1}^M (w_m^{(h)} * \log( \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m}))) \hspace{35pt}$  
+
+- $\mathcal{L}$: normal likelihood function 
+  
+
+## 3. Random Effect Log Likelihood
+$Random^{(h)} = \log(\mathcal{L}({u}^{(h)}, mean = 0, sd = 1))$
+
+## 4. The Random-Effect Latent Variable Model (Objective Function)     
+
+**The joint log likelihood for one hospital ${h}$**   
+
+- Joint likelihood   
+$Joint{\_\mathcal{L}}^{(h)} = \mathcal{L}^{(h)} \mathcal{L}({u}^{(h)}, mean = 0, sd = 1)$    
+<center>*or*</center>    
+$Joint\_\mathcal{L}^{(h)} = \prod_{m=1}^M \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m})^{w_m^{(h)}} \mathcal{L}({u}^{(h)}, mean = 0, sd = 1)$ 
+
+<center>*or*</center>    
+
+- Joint log likelihood    
+$Joint{\_\mathcal{LL}}^{(h)} = \mathcal{LL}^{(h)} + Random^{(h)}$  
+<center>*or*</center>  
+
+$Joint\_{\mathcal{LL}}^{(h)} = \sum_{m=1}^M (w_m^{(h)} * \log( \mathcal{L}( X_{m}^{(h)}, \; mean=\mu_{m} + \ell_{m} * {u}^{(h)}, sd = \sigma_{m}))) + \log(\mathcal{L}({u}^{(h)}, mean = 0, sd = 1))$  
+
+
+
+<br />
+**The joint log likelihood for all hospitals $(h = 1,2,3,...,H)$**  
+
+$Joint^{(Total)} = \sum_{h=1}^{H}(\mathcal{LL}^{(h)} + Random^{(h)}) \hspace{40pt}$  
+
+- $H$: The total number of hospitals in the model.   
+
+## 5. The marginal distribution in a mixed model:
+
+$m^{(h)}(\theta) = \int \mathcal{L}^{h}\mathcal{L}({u}^{(h)},mean=0,sd=1)d{u}^{(h)}$
+
+## 6. The objective function
+$f(\theta) = -\log\prod_{h=1}^{H}m^{(h)}(\theta)$
+
+## 7. Quadrature approximation:   
+#### 7.1 Gaussian-Hermite quadrature rule:  
+
+$\int_{}^{} \exp(-x^2)f(x)\mathrm{dx} \approx \sum_{i=1}^{N}w_{i}f(x_{i})$ <br /> <br />
+
+Consider a function $h(y)$, where the variable $y$ is Normally districubted: $y \sim N(\mu,\sigma^2)$. The expectation of $h(y)$ corresponds to the follwoing integral:   
+
+$\int \cfrac{1}{\sigma \sqrt{2 \pi} } \exp(- \cfrac{(a-\hat{u})^2}{2 \sigma ^2}) h(a) \mathrm{da} \hspace{20pt} \\$ #
+$substitute \; z = \cfrac{a-\hat{u}}{\sqrt{2} \sigma} \to a = \hat{u} + \sqrt{2} \sigma z$
+
+$= \int \cfrac{1}{\sigma \sqrt{2 \pi} } \exp(- \cfrac{(a-\hat{u})^2}{2 \sigma ^2}) h(\hat{u} + \sqrt{2} \sigma z) \mathrm{d}(\hat{u} + \sqrt{2} \sigma z)$
+
+$= \int \cfrac{1}{\sqrt{\pi}}\exp(-z^2)h(\sqrt{2}\sigma z + \mu) \mathrm{dz}\\$
+
+$\approx \cfrac{1}{\sqrt{\pi}} \sum_{i=1}^{N}w_i\cdot h(\sqrt{2}\sigma z_i + \mu)$
+
+Ref: [Gauss Hermite_quadrature](https://en.wikipedia.org/wiki/Gauss-Hermite_quadrature)
+
+#### 7.2  Marginal probability of mixed effect with Gauss-Hermite quadrature approximation for hospital $h$:
+
+$\int p(y^h)q(u)\mathrm{du}$  
+
+$= \int p(y^h)q(a)\mathrm{da} \hspace{85pt}$  # Substitute variable $u \rightarrow a$
+
+$= \int p(y^h)q(a) \exp(z^2) \exp(-z^2) \mathrm{da} \hspace{12pt}$  # Add $\exp(z^2)\exp(-z^2) \hspace{15pt} (where\;z = \cfrac{a-\hat{u}}{\sqrt{2} \sigma})$
+
+$= \int p(y^h)q(a) \exp(z^2) \exp(-z^2) \mathrm{d}(\hat{u} + \sqrt{2} \sigma z)$  # Substitute $a$ with $\hat{u} + \sqrt{2} \sigma z$
+
+$= \sqrt{2} \sigma \int p(y^h)q(a) \exp(z^2) \exp(-z^2) \mathrm{dz}$  # Simpflify  
+
+
+$\approx \sqrt{2} \sigma \sum_{i=1}^{N} w_i \cdot p(y^h) q(a_i) \exp(z_i^2)$
+
+- $a_i = \hat{u} + \sqrt{2} \sigma z_i$  
+- $\sigma = \cfrac{1}{\sqrt{f^{''}(- \log (p(y^h)q(u)))}}$, $f^{''}$ is the second derivative of $f(u) = - \log (p(y^h)q(u)))$ 
+- $z_i,w_i (i = 1,...N): \text{the standard Gauss-Hermite abscissas and weights}$
+
+- $f^{'} = \cfrac{\partial}{\partial{u}} (-\log[p(y^h)q(u)])$
+$= u_h - \sum w_m^h\cfrac{y_m^h-(\mu_m + l _m \cdot u^h)}{\sigma _m^2} \cdot \ell_m$
+
+- $f^{''} = \cfrac{\partial{^{2}}}{\partial{u{^{2}}}} (-\log[p(y^h)q(u^h)])$
+$= 1 + \sum w_m^h\cdot \cfrac{l _m ^2}{\sigma _m ^2}$
+
+## 8. 
+
+### 8.1 Likelihood function definition:   
+The likelihood of a parameter value (or vector of parmeter values) $\theta$, given outcomes $\mathcal{x}$, is equal to the probability (density) assumed for those observed outcomes given those parameter values, that is:
+
+$\mathcal{L}(\theta | \mathcal{x}) = \mathrm{P}(\mathcal{x}|\theta)$
+
+Example, a likelihood function  for a normal distribution is below:   
+$\mathcal{L(\mu,\sigma^2|x) = f(x|\mu,\sigma^2) = \cfrac{1}{\sqrt{2 \pi \sigma ^2}}\exp{(- \cfrac{(x-\mu)^2}{2 \sigma ^2})}}$  
+
+
+### 8.2 The Objective function:
+
+$\mathcal{ -\log [\prod_{h=1}^\mathrm{H}m^{h}(\theta)] = - \sum_{h=1}^\mathrm{H}\log m^{h}(\theta)}$  
+
+- $\mathcal{m^{h}(\theta)}$ is the marginal likelihood function for a hospital $\mathcal{h}$.
+
+### 8.3 The marginal likelihood function for a hospital $\mathcal{h}$: 
+1. 
+$\mathcal{ m^h(\theta) = \int \prod_{m=1}^{\mathrm{M}}[\cfrac{1}{\sqrt{2 \pi \sigma_m^2}}\exp[-\cfrac{1}{2}\cfrac{(x_m - mean)^2}{\sigma_m^2}]]^{\mathrm{w}_m^h} \cdot \cfrac{1}{\sqrt{2 \pi}}\exp[- \cfrac{u^2}{2}]} \mathrm{du}$  
+- where mean =$\mu_{m} + \ell_{m} * \mathcal{u^{h}}$
+
+2.  
+$\mathcal{ m^h(\theta) = \int \prod_{m=1}^{\mathrm{M}}[\cfrac{1}{\sqrt{2 \pi \sigma_m^2}}\exp[-\cfrac{1}{2}\cfrac{(x_m - \mu_{m} - \ell_{m} * \mathcal{u})^2}{\sigma_m^2}]] ^{\mathrm{w}_m^h} \cdot \cfrac{1}{\sqrt{2 \pi}}\exp(- \cfrac{u^2}{2})} \mathrm{du}$ 
+
+3.  
+$\mathcal{ m^h(\theta) = \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} \int \prod_{m=1}^{\mathrm{M}} \exp[-\cfrac{1}{2}\cfrac{(x_m - \mu_{m} - \ell_{m} * \mathcal{u})^2}{\sigma_m^2}] ^{\mathrm{w}_m^h} \cdot \cfrac{1}{\sqrt{2 \pi}}\exp(- \cfrac{u^2}{2})} \mathrm{du}$ 
+
+4.  
+$\mathcal{ m^h(\theta) = \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} \int \prod_{m=1}^{\mathrm{M}} \exp[-\cfrac{w_m^h}{2}\cfrac{(x_m - \mu_{m} - \ell_{m} * \mathcal{u})^2}{\sigma_m^2}]  \cdot \cfrac{1}{\sqrt{2 \pi}}\exp(- \cfrac{u^2}{2})} \mathrm{du}$  
+
+5.  
+$\mathcal{ m^h(\theta) =  \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} \int \prod_{m=1}^{\mathrm{M}} 
+\exp[-\cfrac{w_m^h}{2 \sigma_m^2} (x_m - \mu_{m} - \ell_{m} * \mathcal{u})^2]  \cdot \cfrac{1}{\sqrt{2 \pi}} \exp(- \cfrac{u^2}{2})} \mathrm{du}$  
+
+6.  
+$\mathcal{ m^h(\theta) =  \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} 
+\int \prod_{m=1}^{\mathrm{M}} \exp[-\cfrac{w_m^h}{2 \sigma_m^2} 
+[(x_m - \mu_{m})^2 - 2 (x_m - \mu_{m}) (\ell_{m} * \mathcal{u})+ (\ell_{m} * \mathcal{u})^2]]  }$ 
+${\cdot \cfrac{1}{\sqrt{2 \pi}} \exp(- \cfrac{u^2}{2})} \mathrm{du}$  
+
+7.  
+$\mathcal{ m^h(\theta) =  \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} 
+\int \exp\sum_{m=1}^{\mathrm{M}} [-\cfrac{w_m^h}{2 \sigma_m^2} 
+[(x_m - \mu_{m})^2 - 2 (x_m - \mu_{m}) (\ell_{m} * \mathcal{u})+ (\ell_{m} * \mathcal{u})^2]]  }$ 
+${\cdot  \cfrac{1}{\sqrt{2 \pi}} \exp(- \cfrac{u^2}{2})} \mathrm{du}$ 
+
+8.  
+$\mathcal{ m^h(\theta) =  \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} 
+\int \exp 
+\{\sum_{m=1}^{\mathrm{M}} [-\cfrac{w_m^h}{2 \sigma_m^2}(x_m - \mu_{m})^2] +  
+\sum_{m=1}^{\mathrm{M}}  [\cfrac{w_m^h}{ \sigma_m^2} (x_m - \mu_{m}) (\ell_{m} * \mathcal{u})]  
+}$ ${+ \sum_{m=1}^{\mathrm{M}}  [-\cfrac{w_m^h}{2 \sigma_m^2} (\ell_{m} * \mathcal{u})^2]\}  
+\cdot \cfrac{1}{\sqrt{2 \pi}} \exp(- \cfrac{u^2}{2})} \mathrm{du}$ 
+
+9.  
+$\mathcal{ m^h(\theta) =  \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} 
+\int \exp \{\sum_{m=1}^{\mathrm{M}} [-\cfrac{w_m^h}{2 \sigma_m^2}(x_m - \mu_{m})^2] +  
+\sum_{m=1}^{\mathrm{M}}  [\cfrac{w_m^h}{ \sigma_m^2} (x_m - \mu_{m}) (\ell_{m} * \mathcal{u})] }$ 
+${+ \sum_{m=1}^{\mathrm{M}}  [-\cfrac{w_m^h}{2 \sigma_m^2} (\ell_{m} * \mathcal{u})^2]\}  
+\cdot \cfrac{1}{\sqrt{2 \pi}} \exp(- \cfrac{u^2}{2})}  \mathrm{ du }$ 
+
+10.  
+$\mathcal{ m^h(\theta) =  \cfrac{1}{\sqrt{2\pi}} \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}} 
+\int \exp \{\sum_{m=1}^{\mathrm{M}} [-\cfrac{w_m^h}{2 \sigma_m^2}(x_m - \mu_{m})^2] +  
+\sum_{m=1}^{\mathrm{M}}  [\cfrac{w_m^h}{ \sigma_m^2} (x_m - \mu_{m}) \ell_{m} * \mathcal{u}]  }$ 
+${- \frac{1}{2} [1 + \sum_{m=1}^{\mathrm{M}} (\cfrac{w_m^h}{\sigma_m^2} \ell_{m}^2)] * \mathcal{u}^2\}} \mathrm{ du }$   
+<br>
+
+- Set:
+- a = $- \frac{1}{2} [1 + \sum_{m=1}^{\mathrm{M}} \cfrac{w_m^h}{\sigma_m^2} (\ell_{m})^2]$   
+- b = $\sum_{m=1}^{\mathrm{M}} [\cfrac{w_m^h}{ \sigma_m^2} (x_m - \mu_{m}) \ell_{m}]$   
+- c = $\sum_{m=1}^{\mathrm{M}} [-\cfrac{w_m^h}{2 \sigma_m^2}(x_m - \mu_{m})^2]$  
+- f = $\cfrac{1}{\sqrt{2 \pi}} \prod_{m=1}^{\mathrm{M}} (2 \pi \sigma_m^2)^{- \cfrac{w_m^h}{2}}$
+
+11.  
+$\mathcal{ m^h(\theta) = f \cdot \int \exp (a \cdot u^2 +  b \cdot u + c) \mathrm{du}}$ 
+
+12.  
+$\mathcal{ m^h(\theta) = f \cdot \int \exp [a \cdot (u^2 +  \cfrac{b}{a} \cdot u) + c] \mathrm{du}}$ 
+
+13.  
+$\mathcal{ m^h(\theta) = f \cdot \int \exp [a \cdot (u^2 +  2 \cfrac{b}{2a} u + (\cfrac{b}{2a})^2) + c-a (\cfrac{b}{2a})^2] \mathrm{du}}$
+
+14.  
+$\mathcal{ m^h(\theta) = f \cdot \exp (c-\cfrac{b^2}{4a}) \cdot \int \exp [a \cdot (u^2 + 2 \cfrac{b}{2a} u + (\cfrac{b}{2a})^2)] \mathrm{du}}$
+
+15.  
+$\mathcal{ m^h(\theta) = f \cdot \exp (c-\cfrac{b^2}{4a}) \cdot \int \exp [a \cdot (u  + \cfrac{b}{2a})^2] \mathrm{du}}$
+
+16.  
+$\mathcal{ m^h(\theta) = f \cdot \exp (c-\cfrac{b^2}{4a}) \cdot \int \exp [-\cfrac{1}{2} \cdot \cfrac{(u  + \cfrac{b}{2a})^2}{-\cfrac{1}{2a}}] \mathrm{du}}$
+
+17.  
+$\mathcal{ m^h(\theta) = f \cdot \exp (c-\cfrac{b^2}{4a}) \cdot \sqrt{2 \pi (-\cfrac{1}{2a})}\cdot \{\cfrac{1}{\sqrt{2 \pi (-\cfrac{1}{2a})}}  \cdot \int \exp [-\cfrac{1}{2} \cdot \cfrac{(u  + \cfrac{b}{2a})^2}{-\cfrac{1}{2a}}] \mathrm{du}\}}$
+
+- $\mathcal{\cfrac{1}{\sqrt{2 \pi (-\cfrac{1}{2a})}} \int \exp [-\cfrac{1}{2} \cdot \cfrac{(u  + \cfrac{b}{2a})^2}{-\cfrac{1}{2a}}] \mathrm{du}} = 1$ because the intergation over a probability density function equals one. 
+
+18.  
+$\mathcal{ m^h(\theta) = f \cdot \exp (c-\cfrac{b^2}{4a}) \cdot \sqrt{2 \pi (-\cfrac{1}{2a})}}$
+
+
+## 9. Why Gaussian_quadrature approach failed to approximate the marginal likelihood function. 
+
+- An n-point Gaussian quadrature rule, named after Carl Friedrich Gauss, is a quadrature rule constructed to yield an exact result for polynomials of degree 2n − 1 or less by a suitable choice of the points xi and weights wi for i = 1, ..., n. [Ref: wikipedia](https://en.wikipedia.org/wiki/Gaussian_quadrature)
+
+- To intergrate a polynomials of degree 2n-1 exactly use only n nodes. 
+
+- ${\exp(x) = \sum_{k=0}^{\infty}\cfrac{x^k}{k!}=1 + x + \cfrac{x^2}{2!}+\cfrac{x^3}{3!}+\cfrac{x^4}{4!}+ \cdots}$
+
+- The degree of an exponential function, $exp(x)$ is ${\infty}$. [Ref: wikipedia](https://en.wikipedia.org/wiki/Degree_of_a_polynomial)
+
+- deg f = $\lim\limits_{x \to \infty}\cfrac{\log|f(x)|}{log(x)}$
+
+
+## 10. The corresponding SAS code  
+    proc nlmixed data=input tech=dbldog qpoints=30 noad;  
+        parms mu1-mu7=0;  
+
+        array x{*}      x1-x7;  
+        array mu{*}     mu1-mu7;  
+        array fl{*}     fl1-fl7;  
+        array loglik{*} loglik1-loglik7;  
+        array w{*}      w1-w7;  
+        array err{*}    err1-err7;  
+        totloglik = 0;  
+        
+        do i=1 to 5;  
+	        if x{i} = . then loglik{i}= 0;  
+	           else loglik{i} = w{i} * log(pdf('normal', x{i}, mu{i}+fl{i}*lv, err{i})); 
+            totloglik = loglik{i} + totloglik;  
+        end;  
+  
+        model   id ~ general(totloglik);   
+        random  lv ~ normal(0, 1) subject= id;  
+        
+        ods output ParameterEstimates=ParEst;  
+        predict lv out=Pred;  
+    run;  
