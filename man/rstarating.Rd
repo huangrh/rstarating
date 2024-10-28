@@ -3,7 +3,6 @@
 \docType{package}
 \name{rstarating}
 \alias{rstarating}
-\alias{rstarating-package}
 \title{rstarating.}
 \description{
 cms hospital compare SAS Pack Star Rating

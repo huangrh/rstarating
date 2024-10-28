@@ -25,7 +25,7 @@ The formula:
  \item \eqn{N_{kd}}{N_kd}:  The total number of hospitals for measure \code{k} in measure group \code{d}
  }
 
-\deqn{R^2 = 1 - \frac{estimated variance}{observed variance}}{R-
+ \deqn{R^2 = 1 - \frac{estimated variance}{observed variance}}{R-
 squared = 1 - (estimated variance)/(observed variance)}
 }
 \examples{

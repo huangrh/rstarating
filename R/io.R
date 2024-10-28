@@ -41,7 +41,7 @@ out_dir <- function(x) {
 #'
 #' Pipe function from magrittr package.
 #'
-`%>%` <- magrittr:::pipe()
+`%>%` <- magrittr:::`%>%`
 
 
 #' A modified ggplot

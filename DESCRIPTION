@@ -9,7 +9,7 @@ Description: Overall hospital quality star rating on hospital compare (v2.0)
 License: GPL3
 LazyData: TRUE
 Imports: data.table(>= 1.9.6)
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.2
 Suggests: knitr,
     rmarkdown,
     testthat

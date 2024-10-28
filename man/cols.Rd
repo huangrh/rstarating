@@ -5,8 +5,12 @@
 \alias{measure}
 \title{Measure Name Filter}
 \usage{
-cols(x = sasdata, type = c("score", "denominator", "wt", "id"),
-  groups = NULL, cutoff = 1L)
+cols(
+  x = sasdata,
+  type = c("score", "denominator", "wt", "id"),
+  groups = NULL,
+  cutoff = 1L
+)
 }
 \arguments{
 \item{x}{A measure score table.}
